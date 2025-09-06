@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Local Turístico — Landing Page</title>
+  <meta name="description" content="Landing page responsiva e acessível para apresentar um destino turístico, com seções de destaques, atrações, galeria, mapa e contato." />
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%2300a884'/%3E%3Cpath d='M20 60c12-6 24-6 36 0 12 6 24 6 36 0' stroke='%23fff' stroke-width='6' fill='none'/%3E%3Cpath d='M35 40a15 15 0 1030 0 15 15 0 10-30 0' fill='%23fff'/%3E%3C/svg%3E"/>
+
+  <style>
+    :root{
+      /* Personalize rapidamente por aqui */
+      --brand: #0ea5e9;            /* cor primária */
+      --brand-ink: #0b76a8;        /* tom mais escuro da primária */
+      --accent: #22c55e;           /* cor de destaque */
+      --bg: #ffffff;               /* fundo claro */
+      --ink: #0f172a;              /* texto principal */
+      --muted: #64748b;            /* texto secundário */
+      --surface: #f8fafc;          /* cartões/boxes */
+      --radius: 16px;              /* bordas arredondadas */
+      --maxw: 1100px;              /* largura máxima */
+      --hero-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1974&auto=format&fit=crop'); /* troque pela sua foto */
+    }
+
+    @media (prefers-color-scheme: dark){
+      :root{ --bg: #0b1220; --ink: #e6edf7; --surface:#0f172a; --muted:#8aa0b8 }
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+      color: var(--ink); background: var(--bg);
+    }
+    a{color:inherit}
+    img{max-width:100%; display:block}
+    .container{max-width: var(--maxw); margin: 0 auto; padding: 0 20px}
+
+    /* Header */
+    header{
+      position: sticky; top: 0; z-index: 50; backdrop-filter: blur(8px);
+      background: color-mix(in hsl, var(--bg), transparent 30%);
+      border-bottom: 1px solid color-mix(in srgb, var(--ink), transparent 85%);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 0}
+    .brand{display:flex; align-items:center; gap:10px; text-decoration:none}
+    .brand svg{width:28px; height:28px}
+    .brand strong{font-weight:800; letter-spacing:0.3px}
+    .menu{display:flex; gap:18px; align-items:center}
+    .menu a{padding:8px 10px; text-decoration:none; color:var(--muted)}
+    .menu a:hover{color:var(--ink)}
+    .btn{display:inline-block; padding:10px 16px; border-radius:999px; text-decoration:none; font-weight:600; border:1px solid transparent}
+    .btn.primary{background:var(--brand); color:white}
+    .btn.primary:hover{background:var(--brand-ink)}
+
+    /* Mobile nav */
+    #hamb{display:none}
+    .hamb{display:none; border:1px solid color-mix(in srgb, var(--ink), transparent 80%); padding:8px 10px; border-radius:10px}
+    @media (max-width: 840px){
+      .menu{display:none}
+      .hamb{display:inline-block}
+      #hamb:checked + .menu{display:flex; flex-direction:column; position:absolute; left:20px; right:20px; top:64px; background:var(--surface); border:1px solid color-mix(in srgb, var(--ink), transparent 85%); border-radius:12px; padding:12px}
+      .menu a{padding:10px}
+    }
+
+    /* Hero */
+    .hero{
+      position:relative; overflow:hidden; border-bottom: 1px solid color-mix(in srgb, var(--ink), transparent 90%);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--brand), transparent 85%), transparent 60%), var(--hero-image) center/cover no-repeat;
+      color:#fff;
+    }
+    .hero .container{padding: 80px 20px 120px}
+    .hero h1{font-size: clamp(28px, 4vw, 48px); margin: 8px 0}
+    .hero p{max-width: 60ch; color: #eef6ff}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background:color-mix(in srgb, #000, transparent 60%); border:1px solid color-mix(in srgb, #fff, transparent 70%); font-weight:600
+    }
+
+    /* Sections */
+    section{padding: 64px 0}
+    h2{font-size: clamp(22px, 3.2vw, 34px); margin:0 0 18px}
+    .lead{color:var(--muted); max-width: 70ch; margin-bottom: 26px}
+
+    /* Destaques/Atrações */
+    .grid{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:18px
+    }
+    .card{
+      background:var(--surface); border:1px solid color-mix(in srgb, var(--ink), transparent 88%);
+      padding:18px; border-radius: var(--radius);
+    }
+    .card h3{margin:10px 0 6px}
+    .chip{display:inline-block; font-size:12px; padding:4px 8px; border-radius:999px; background: color-mix(in srgb, var(--brand), transparent 85%); color: var(--brand-ink); border:1px solid color-mix(in srgb, var(--brand), transparent 70%)}
+
+    /* Galeria */
+    .gallery{display:grid; grid-template-columns: repeat(4, 1fr); gap:10px}
+    .gallery img{aspect-ratio: 4/3; object-fit:cover; border-radius:12px}
+
+    /* Mapa/CTA */
+    .mapbox{border-radius: var(--radius); overflow:hidden; border:1px solid color-mix(in srgb, var(--ink), transparent 85%)}
+    iframe{width:100%; height:420px; border:0}
+
+    /* Testimonials */
+    .quote{
+      background:linear-gradient(180deg, color-mix(in srgb, var(--accent), transparent 92%), transparent 70%);
+      border:1px solid color-mix(in srgb, var(--ink), transparent 88%);
+      border-radius: var(--radius); padding:18px
+    }
+    blockquote{margin:0; font-size: 18px}
+    cite{display:block; margin-top:8px; color:var(--muted)}
+
+    /* Footer */
+    footer{padding:30px 0 60px; border-top:1px solid color-mix(in srgb, var(--ink), transparent 88%); color: var(--muted)}
+
+    /* Utilities */
+    .mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:18px}
+    .center{text-align:center}
+
+    @media (max-width: 960px){
+      .grid{grid-template-columns: 1fr 1fr}
+      .gallery{grid-template-columns: 1fr 1fr 1fr}
+    }
+    @media (max-width: 640px){
+      .grid{grid-template-columns: 1fr}
+      .gallery{grid-template-columns: 1fr 1fr}
+      .hero .container{padding: 64px 20px 80px}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header aria-label="Barra de navegação">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Página inicial">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L21 8v8l-9 6-9-6V8l9-6Z" stroke="currentColor" stroke-width="1.6"/>
+          <circle cx="12" cy="12" r="3" fill="currentColor" />
+        </svg>
+        <strong>Local Turístico</strong>
+      </a>
+
+      <label class="hamb" for="hamb" aria-label="Abrir menu">☰</label>
+      <input id="hamb" type="checkbox" hidden>
+      <nav class="menu" aria-label="Seções do site">
+        <a href="#sobre">Sobre</a>
+        <a href="#atracoes">Atrações</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#como-chegar">Como Chegar</a>
+        <a href="#contato" class="btn primary">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="top" aria-label="Destaque visual do destino">
+    <div class="container">
+      <span class="pill" aria-label="Selo de destaque">🌴 Destino imperdível</span>
+      <h1>Descubra um paraíso inesquecível</h1>
+      <p>Uma experiência completa: natureza exuberante, cultura local vibrante e gastronomia única. Planeje sua visita e surpreenda-se com tudo o que este destino oferece.</p>
+      <div class="mt-4">
+        <a class="btn primary" href="#atracoes">Explorar atrações</a>
+        <a class="btn" style="border-color:color-mix(in srgb, var(--ink), transparent 70%)" href="#como-chegar">Como chegar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre -->
+  <section id="sobre" aria-labelledby="ttl-sobre">
+    <div class="container">
+      <h2 id="ttl-sobre">Sobre o destino</h2>
+      <p class="lead">Contextualize o visitante: história, geografia, melhor época para visitação, clima e curiosidades locais. Escreva um resumo amigável e direto, destacando o que torna o lugar único e por que vale a pena incluí-lo no roteiro.</p>
+      <div class="grid">
+        <div class="card">
+          <span class="chip">Melhor época</span>
+          <h3>Entre julho e novembro</h3>
+          <p>Clima mais seco, trilhas acessíveis e festivais culturais.</p>
+        </div>
+        <div class="card">
+          <span class="chip">Ideal para</span>
+          <h3>Famílias e aventureiros</h3>
+          <p>Atividades ao ar livre, passeios guiados e experiências gastronômicas.</p>
+        </div>
+        <div class="card">
+          <span class="chip">Duração</span>
+          <h3>3–5 dias</h3>
+          <p>Tempo perfeito para aproveitar atrações principais e descansar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Atrações -->
+  <section id="atracoes" aria-labelledby="ttl-atracoes">
+    <div class="container">
+      <h2 id="ttl-atracoes">Atrações em destaque</h2>
+      <p class="lead">Liste 3–6 atrações com imagens, descrição curta e dicas práticas (tempo de visita, melhor horário, faixa de preço, necessidade de guia etc.).</p>
+      <div class="grid">
+        <article class="card" aria-labelledby="a1">
+          <img src="https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=1200&auto=format&fit=crop" alt="Mirante com vista panorâmica" />
+          <h3 id="a1">Mirante do Horizonte</h3>
+          <p>Vista 360º para apreciar o pôr do sol. <strong>Dica:</strong> chegue 30 min antes para garantir fotos incríveis.</p>
+        </article>
+        <article class="card" aria-labelledby="a2">
+          <img src="https://images.unsplash.com/photo-1602424142200-1370f0a9bbf2?q=80&w=1200&auto=format&fit=crop" alt="Trilha ecológica em meio à mata" />
+          <h3 id="a2">Trilha das Cachoeiras</h3>
+          <p>Percurso moderado com 3 quedas d'água. <strong>Leve:</strong> calçado adequado e água.</p>
+        </article>
+        <article class="card" aria-labelledby="a3">
+          <img src="https://images.unsplash.com/photo-1533777324565-a040eb52fac1?q=80&w=1200&auto=format&fit=crop" alt="Feira com artesanato local" />
+          <h3 id="a3">Feira de Artes e Sabores</h3>
+          <p>Produtos típicos, música ao vivo e comida caseira. <strong>Melhor horário:</strong> fim de tarde.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galeria -->
+  <section id="galeria" aria-labelledby="ttl-galeria">
+    <div class="container">
+      <h2 id="ttl-galeria">Galeria</h2>
+      <p class="lead">Substitua as imagens pelos seus arquivos (JPG/PNG) para evidenciar paisagens, cultura e gastronomia.</p>
+      <div class="gallery" role="list">
+        <img role="listitem" src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=1200&auto=format&fit=crop" alt="Praia com águas cristalinas" />
+        <img role="listitem" src="https://images.unsplash.com/photo-1572307480813-3e4d7f1f2a69?q=80&w=1200&auto=format&fit=crop" alt="Centro histórico colorido" />
+        <img role="listitem" src="https://images.unsplash.com/photo-1472396961693-142e6e269027?q=80&w=1200&auto=format&fit=crop" alt="Gastronomia local em foco" />
+        <img role="listitem" src="https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1200&auto=format&fit=crop" alt="Barco em lago ao entardecer" />
+        <img role="listitem" src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?q=80&w=1200&auto=format&fit=crop" alt="Trilha em montanha" />
+        <img role="listitem" src="https://images.unsplash.com/photo-1529336953121-adb2db0f44fc?q=80&w=1200&auto=format&fit=crop" alt="Cachoeira em vegetação densa" />
+        <img role="listitem" src="https://images.unsplash.com/photo-1524396309943-e03f5249ed2c?q=80&w=1200&auto=format&fit=crop" alt="Mercado com frutas e especiarias" />
+        <img role="listitem" src="https://images.unsplash.com/photo-1544989164-31dc3d6fd0cf?q=80&w=1200&auto=format&fit=crop" alt="Café ao ar livre" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Como Chegar / Mapa -->
+  <section id="como-chegar" aria-labelledby="ttl-mapa">
+    <div class="container">
+      <h2 id="ttl-mapa">Como chegar</h2>
+      <p class="lead">Insira um mapa com o ponto de interesse e inclua instruções: por carro, ônibus, avião e transfers locais.</p>
+      <div class="mapbox">
+        <!-- Substitua a coordenada do "q=" no src abaixo pela do seu destino -->
+        <iframe title="Mapa do destino" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=-2.529734,-44.296875&hl=pt-BR&z=6&output=embed"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Depoimentos -->
+  <section aria-labelledby="ttl-dep">
+    <div class="container">
+      <h2 id="ttl-dep">O que dizem os visitantes</h2>
+      <div class="grid">
+        <div class="quote">
+          <blockquote>“Lugar encantador! Cada pôr do sol parecia uma pintura. Recomendo o passeio de barco.”</blockquote>
+          <cite>— Ana S.</cite>
+        </div>
+        <div class="quote">
+          <blockquote>“Gastronomia surpreendente e povo acolhedor. Voltarei com a família!”</blockquote>
+          <cite>— Marcelo R.</cite>
+        </div>
+        <div class="quote">
+          <blockquote>“Trilhas bem sinalizadas e vistas inesquecíveis. Leve água e protetor.”</blockquote>
+          <cite>— Júlia M.</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato / Rodapé -->
+  <section id="contato" aria-labelledby="ttl-contato">
+    <div class="container">
+      <h2 id="ttl-contato">Planeje sua visita</h2>
+      <p class="lead">Entre em contato para roteiros personalizados, reservas com parceiros locais e dicas sob medida.</p>
+      <div class="card">
+        <form aria-label="Formulário de contato" onsubmit="alert('Mensagem enviada!'); return false;">
+          <div style="display:grid; gap:12px; grid-template-columns: 1fr 1fr">
+            <label>Nome
+              <input required name="nome" type="text" placeholder="Seu nome" style="width:100%; padding:12px; border-radius:10px; border:1px solid color-mix(in srgb, var(--ink), transparent 80%)">
+            </label>
+            <label>E‑mail
+              <input required name="email" type="email" placeholder="voce@email.com" style="width:100%; padding:12px; border-radius:10px; border:1px solid color-mix(in srgb, var(--ink), transparent 80%)">
+            </label>
+          </div>
+          <label class="mt-3">Mensagem
+            <textarea required name="msg" rows="4" placeholder="Como podemos ajudar?" style="width:100%; padding:12px; border-radius:10px; border:1px solid color-mix(in srgb, var(--ink), transparent 80%)"></textarea>
+          </label>
+          <div class="mt-3"><button class="btn primary" type="submit">Enviar</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="center">
+    <div class="container">
+      <small>
+        © <span id="year"></span> Local Turístico. Feito com HTML & CSS — Acessível, responsivo e sem frameworks.
+      </small>
+    </div>
+  </footer>
+
+  <a href="#top" class="btn" style="position:fixed; right:16px; bottom:16px; border-color: color-mix(in srgb, var(--ink), transparent 70%); background: var(--surface)" aria-label="Voltar ao topo">↑</a>
+
+  <script>
+    // Atualiza o ano no rodapé
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
