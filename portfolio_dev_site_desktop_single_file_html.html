@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Seu Nome — Portfólio Dev</title>
+  <meta name="description" content="Portfólio de Desenvolvedor(a): projetos, habilidades e contato." />
+  <link rel="icon" href="favicon.ico" />
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Seu Nome — Portfólio Dev" />
+  <meta property="og:description" content="Projetos, habilidades e contato." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="cover.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0c0f; /* dark base */
+      --muted: #a1a1aa;
+      --text: #e5e7eb;
+      --accent: #7c3aed; /* purple */
+      --card: #111218;
+      --border: #1f2430;
+      --ring: 0 0 0 4px rgba(124,58,237,.25);
+    }
+    .light {
+      --bg: #f8fafc;
+      --muted: #475569;
+      --text: #0f172a;
+      --accent: #6d28d9;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --ring: 0 0 0 4px rgba(109,40,217,.20);
+    }
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 600px at 10% 0%, rgba(124,58,237,.08), transparent 60%),
+                  radial-gradient(1000px 500px at 90% 10%, rgba(14,165,233,.08), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.6;
+    }
+    .container { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    header {
+      position: sticky; top: 0; z-index: 30;
+      backdrop-filter: saturate(150%) blur(10px);
+      background: color-mix(in oklab, var(--bg) 80%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text); }
+    .brand .logo { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg,#7c3aed, #0ea5e9); display: grid; place-items: center; box-shadow: 0 6px 24px rgba(124,58,237,.35); }
+    .brand .logo svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,.25)); }
+    .brand strong { font-weight: 700; letter-spacing: .2px }
+    .nav a.link { color: var(--muted); text-decoration: none; font-weight: 500; padding: 10px 12px; border-radius: 10px; }
+    .nav a.link:hover { color: var(--text); background: color-mix(in oklab, var(--card) 70%, transparent); }
+    .btn { border: 1px solid var(--border); background: linear-gradient(180deg, color-mix(in oklab,var(--card) 88%, transparent), color-mix(in oklab,var(--card) 65%, transparent)); color: var(--text); padding: 10px 14px; border-radius: 12px; text-decoration: none; font-weight: 600; box-shadow: 0 2px 0 0 rgba(0,0,0,.2) inset; }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 0 0 1px var(--border), 0 2px 18px rgba(124,58,237,.25); }
+    .btn:focus-visible { outline: none; box-shadow: var(--ring); }
+
+    /* Hero */
+    .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; padding: 48px 0 12px; }
+    .badge { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border:1px solid var(--border); border-radius:999px; color:var(--muted); font-size:14px; }
+    h1 { font-size: clamp(32px, 4vw, 54px); line-height: 1.1; margin: 10px 0; letter-spacing: -0.02em; }
+    .subtitle { font-size: 18px; color: var(--muted); max-width: 60ch; }
+    .hero-cta { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+
+    .card { background: linear-gradient(180deg, color-mix(in oklab,var(--card) 92%, transparent), color-mix(in oklab,var(--card) 70%, transparent)); border: 1px solid var(--border); border-radius: 16px; padding: 18px; }
+    .stack { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { border: 1px solid var(--border); border-radius: 999px; padding: 6px 10px; font: 600 12px/1 Inter, sans-serif; color: var(--muted); }
+
+    /* Sections */
+    section { padding: 56px 0; }
+    .section-title { font-size: clamp(22px, 3vw, 28px); margin-bottom: 18px; }
+    .section-desc { color: var(--muted); margin-top: -6px; margin-bottom: 24px; }
+
+    /* Grid Projects */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .project { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); background: linear-gradient(180deg, color-mix(in oklab,var(--card) 90%, transparent), color-mix(in oklab,var(--card) 68%, transparent)); transition: transform .2s ease, box-shadow .2s ease; }
+    .project:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,.25); }
+    .project .thumb { aspect-ratio: 16/9; background: linear-gradient(135deg, #1f2430, #0f172a); display: grid; place-items:center; border-bottom: 1px solid var(--border); }
+    .project .thumb svg { opacity: .8 }
+    .project .body { padding: 16px; }
+    .project h3 { margin: 0 0 6px; font-size: 18px; }
+    .project p { margin: 0; color: var(--muted); font-size: 14px; }
+    .project .meta { display:flex; justify-content: space-between; align-items:center; margin-top: 12px; gap: 8px; }
+    .project .tags { display:flex; gap:6px; flex-wrap:wrap; }
+    .project .tags .chip { padding:4px 8px; font-size:11px }
+
+    /* About */
+    .about { display: grid; grid-template-columns: .9fr 1.1fr; gap: 28px; align-items: center; }
+    .avatar { width: 140px; height: 140px; border-radius: 50%; background: linear-gradient(135deg,#7c3aed,#0ea5e9); display:grid; place-items:center; box-shadow: 0 12px 40px rgba(124,58,237,.35); border: 6px solid color-mix(in oklab,var(--bg) 86%, transparent); }
+
+    /* Contact */
+    .contact { display:grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items:center; }
+    .contact form { display:grid; gap: 12px; }
+    .field { display:grid; gap:8px; }
+    .input, textarea { border:1px solid var(--border); background: color-mix(in oklab,var(--card) 90%, transparent); color: var(--text); border-radius: 12px; padding: 10px 12px; font: 500 14px/1.5 Inter, sans-serif; }
+    .input:focus, textarea:focus { outline: none; box-shadow: var(--ring); }
+
+    footer { border-top: 1px solid var(--border); padding: 28px 0; color: var(--muted); font-size: 14px; }
+
+    /* Utilities */
+    .row { display:flex; gap: 12px; align-items:center; flex-wrap: wrap; }
+    .hidden { display:none }
+
+    /* Responsive tweaks */
+    @media (max-width: 1000px) {
+      .hero, .about, .contact { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: 1fr; }
+      header .nav .links { display: none; }
+    }
+  </style>
+  <script>
+    // Theme toggle (persist on localStorage)
+    const applyTheme = (t) => {
+      document.documentElement.classList.toggle('light', t === 'light');
+    };
+    const initTheme = () => {
+      const pref = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      applyTheme(pref);
+    };
+    document.addEventListener('DOMContentLoaded', initTheme);
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Seu Nome",
+    "jobTitle": "Desenvolvedor(a)",
+    "url": "https://seu-dominio.dev",
+    "sameAs": ["https://github.com/seuuser", "https://www.linkedin.com/in/seuuser/"]
+  }
+  </script>
+</head>
+<body>
+  <a href="#projetos" class="hidden" tabindex="0">Pular para projetos</a>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#topo" aria-label="Início">
+        <span class="logo" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12L12 5L19 12L12 19L5 12Z" stroke="white" stroke-width="2"/>
+          </svg>
+        </span>
+        <strong>Seu Nome</strong>
+      </a>
+      <nav class="row links" aria-label="Principal">
+        <a class="link" href="#sobre">Sobre</a>
+        <a class="link" href="#projetos">Projetos</a>
+        <a class="link" href="#contato">Contato</a>
+      </nav>
+      <div class="row">
+        <button class="btn" id="themeBtn" type="button" aria-label="Alternar tema">Tema</button>
+        <a class="btn" href="https://github.com/seuuser" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="topo">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <span class="badge" role="status" aria-live="polite">Disponível para novas oportunidades</span>
+        <h1 id="hero-title">Desenvolvedor(a) Full‑Stack focado em produtos elegantes e performáticos.</h1>
+        <p class="subtitle">Construo soluções web com atenção a acessibilidade, experiência do usuário e boas práticas de engenharia. Abaixo, alguns projetos e como posso ajudar seu time.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#projetos">Ver projetos</a>
+          <a class="btn" href="#contato">Entrar em contato</a>
+        </div>
+        <div class="row" style="margin-top:16px">
+          <div class="stack">
+            <span class="chip">TypeScript</span>
+            <span class="chip">React</span>
+            <span class="chip">Node.js</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">Docker</span>
+            <span class="chip">CI/CD</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2 style="margin:0 0 10px">Destaques</h2>
+        <ul style="margin:0; padding-left:18px; color:var(--muted)">
+          <li>+10 projetos públicos com testes e documentação.</li>
+          <li>Experiência com arquitetura limpa e DDD.</li>
+          <li>Atuação em squads ágeis (Scrum/Kanban).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJETOS -->
+    <section id="projetos" aria-labelledby="projects-title">
+      <h2 class="section-title" id="projects-title">Projetos em destaque</h2>
+      <p class="section-desc">Seleção de projetos recentes. Cada card inclui breve contexto, tecnologias e links.</p>
+      <div class="grid">
+        <!-- Project Card 1 -->
+        <article class="project" aria-labelledby="p1-title">
+          <div class="thumb" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 7h18M3 12h18M3 17h18" stroke="#a1a1aa" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3 id="p1-title">Dashboard Analytics</h3>
+            <p>Painel interativo com gráficos em tempo real e exportação de relatórios.</p>
+            <div class="meta">
+              <div class="tags">
+                <span class="chip">React</span>
+                <span class="chip">Node</span>
+                <span class="chip">PostgreSQL</span>
+              </div>
+              <div class="row">
+                <a class="btn" href="#" target="_blank" rel="noopener">Demo</a>
+                <a class="btn" href="#" target="_blank" rel="noopener">Código</a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Project Card 2 -->
+        <article class="project" aria-labelledby="p2-title">
+          <div class="thumb" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3v18M3 12h18" stroke="#a1a1aa" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3 id="p2-title">API Catálogo</h3>
+            <p>API REST com autenticação JWT, cache e observabilidade (metrics e tracing).</p>
+            <div class="meta">
+              <div class="tags">
+                <span class="chip">Node</span>
+                <span class="chip">TypeScript</span>
+                <span class="chip">Docker</span>
+              </div>
+              <div class="row">
+                <a class="btn" href="#" target="_blank" rel="noopener">Docs</a>
+                <a class="btn" href="#" target="_blank" rel="noopener">Código</a>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- Project Card 3 -->
+        <article class="project" aria-labelledby="p3-title">
+          <div class="thumb" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="9" stroke="#a1a1aa" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3 id="p3-title">Loja Minimal</h3>
+            <p>SPA com carrinho, checkout integrado e testes end‑to‑end.</p>
+            <div class="meta">
+              <div class="tags">
+                <span class="chip">Vite</span>
+                <span class="chip">React</span>
+                <span class="chip">Cypress</span>
+              </div>
+              <div class="row">
+                <a class="btn" href="#" target="_blank" rel="noopener">Demo</a>
+                <a class="btn" href="#" target="_blank" rel="noopener">Código</a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" aria-labelledby="about-title">
+      <h2 class="section-title" id="about-title">Sobre mim</h2>
+      <div class="about card">
+        <div class="row" style="align-items:center; gap:20px">
+          <div class="avatar" aria-hidden="true">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="2"/>
+              <path d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="#fff" stroke-width="2"/>
+            </svg>
+          </div>
+          <div>
+            <p><strong>Seu Nome</strong> — desenvolvedor(a) com experiência em front‑end e back‑end. Gosto de resolver problemas reais, manter o código limpo e colaborar em equipes multidisciplinares.</p>
+            <div class="stack" style="margin-top:10px">
+              <span class="chip">Clean Architecture</span>
+              <span class="chip">TDD</span>
+              <span class="chip">Design Systems</span>
+              <span class="chip">A11y</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" aria-labelledby="contact-title">
+      <h2 class="section-title" id="contact-title">Contato</h2>
+      <div class="contact">
+        <form class="card" onsubmit="event.preventDefault(); alert('Obrigado! Mensagem enviada (simulação).'); this.reset();">
+          <div class="field">
+            <label for="name">Nome</label>
+            <input class="input" id="name" name="name" placeholder="Seu nome" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input class="input" id="email" name="email" type="email" placeholder="voce@email.com" required />
+          </div>
+          <div class="field">
+            <label for="msg">Mensagem</label>
+            <textarea id="msg" class="input" name="message" rows="4" placeholder="Como posso ajudar?" required></textarea>
+          </div>
+          <button class="btn" type="submit">Enviar</button>
+        </form>
+        <div class="card">
+          <h3 style="margin-top:0">Redes</h3>
+          <p class="section-desc" style="margin: 0 0 12px">Prefere me chamar por aqui?</p>
+          <div class="row">
+            <a class="btn" href="mailto:seu@email.com">Email</a>
+            <a class="btn" href="https://linkedin.com/in/seuuser" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn" href="https://wa.me/5599999999999" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container row" style="justify-content:space-between">
+      <span>© <span id="year"></span> Seu Nome. Todos os direitos reservados.</span>
+      <span class="row">Feito com <span aria-hidden="true">❤️</span> & foco em acessibilidade.</span>
+    </div>
+  </footer>
+
+  <script>
+    // Footer year & theme button
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+  </script>
+</body>
+</html>
