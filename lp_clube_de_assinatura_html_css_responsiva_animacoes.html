@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clube de Assinatura – Landing Page</title>
+  <style>
+    /* ================= Tokens / Theme ================= */
+    :root{
+      --bg:#0f1220;            /* fundo */
+      --surface:#141836;       /* cartões */
+      --surface-2:#10142d;     /* header/footer */
+      --text:#ecf0ff;          /* texto principal */
+      --muted:#a2abd1;         /* texto auxiliar */
+      --brand:#7c5cff;         /* roxo */
+      --brand-2:#5de1e6;       /* ciano */
+      --accent:#ffc86b;        /* destaque */
+      --radius:18px;           /* cantos */
+      --shadow:0 14px 40px rgba(0,0,0,.35);
+      --container:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text); font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial;
+      background:
+        radial-gradient(1200px 600px at -15% -10%, rgba(124,92,255,.25), transparent 60%),
+        radial-gradient(900px 500px at 110% 10%, rgba(93,225,230,.22), transparent 60%),
+        var(--bg);
+    }
+    img{max-width:100%; display:block}
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--container); margin:auto; padding:0 24px}
+    .card{background:var(--surface); border-radius:var(--radius); box-shadow:var(--shadow)}
+
+    /* ================= Header ================= */
+    header.site{background:var(--surface-2); position:sticky; top:0; z-index:20; backdrop-filter:saturate(140%) blur(8px)}
+    .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+    .brand .logo{width:28px; height:28px; border-radius:10px; background:linear-gradient(135deg,var(--brand),var(--brand-2)); box-shadow:0 0 0 4px rgba(124,92,255,.18)}
+    nav ul{list-style:none; display:flex; gap:18px; margin:0; padding:0}
+    nav a{padding:8px 12px; border-radius:12px; color:var(--text)}
+    nav a:hover{background:rgba(124,92,255,.18)}
+    .btn{appearance:none; border:0; padding:12px 16px; border-radius:12px; font-weight:700; cursor:pointer}
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#0b0b14}
+    .btn-ghost{background:transparent; color:var(--text); border:1px solid #2a2f57}
+
+    /* ================= Hero ================= */
+    .hero{padding:42px 0 28px}
+    .hero .wrap{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:center}
+    .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; color:var(--muted); background:#0f1330; border:1px solid #2a2f57; border-radius:999px; padding:6px 10px}
+    .hero h1{margin:12px 0 8px; font-size:clamp(28px,3.6vw,48px)}
+    .hero p{margin:0 0 18px; color:var(--muted)}
+    .hero .cta{display:flex; gap:12px}
+
+    .mock{position:relative; aspect-ratio:4/3; overflow:hidden}
+    .mock .shine{position:absolute; inset:0; background:radial-gradient(800px 340px at 70% 30%, rgba(124,92,255,.35), transparent 60%)}
+    .book{position:absolute; right:6%; bottom:8%; width:min(48%,420px); transform-origin:70% 90%;
+      animation:float 5.8s ease-in-out infinite}
+    .spark{position:absolute; inset:auto 10% 70% auto; width:90px; filter:drop-shadow(0 10px 18px rgba(124,92,255,.35)); animation:pulse 3.5s ease-in-out infinite}
+
+    @keyframes float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+    @keyframes pulse{0%,100%{opacity:.6; transform:scale(.96) rotate(0deg)}50%{opacity:1; transform:scale(1.04) rotate(4deg)}}
+
+    /* ================= Benefits ================= */
+    section.benefits{padding:30px 0}
+    .benefits h2{margin:0 0 12px; font-size:clamp(22px,2.6vw,32px)}
+    .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .tile{padding:18px}
+    .tile h3{margin:8px 0 6px}
+    .icon{width:36px; height:36px; border-radius:10px; display:grid; place-content:center; background:#0f1330; border:1px solid #2a2f57}
+
+    /* ================= Plans / CTA ================= */
+    .plans{padding:8px 0 34px}
+    .plan-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    .plan{padding:22px; position:relative; overflow:hidden}
+    .plan.popular{border:1px solid rgba(124,92,255,.6)}
+    .badge{position:absolute; top:14px; right:14px; font-size:12px; padding:6px 10px; border-radius:999px; background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#08111a}
+    .price{font-size:clamp(26px,2.6vw,34px); font-weight:900; margin:8px 0}
+    .list{margin:0; padding:0 0 0 18px; color:var(--muted)}
+    .plan .cta{margin-top:14px}
+    .btn:hover{filter:brightness(1.1)}
+
+    /* ================= Footer ================= */
+    footer.site{background:var(--surface-2)}
+    .foot{display:grid; grid-template-columns:1.2fr .8fr; gap:18px; padding:18px 0; color:var(--muted)}
+
+    /* ================= Media Queries ================= */
+    @media (max-width: 980px){
+      .hero .wrap{grid-template-columns:1fr}
+      .grid-3{grid-template-columns:1fr 1fr}
+      .plan-grid{grid-template-columns:1fr}
+      .foot{grid-template-columns:1fr}
+    }
+    @media (max-width: 620px){
+      nav ul{display:none}
+      .grid-3{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- ================= Header ================= -->
+  <header class="site">
+    <div class="container topbar">
+      <div class="brand"><span class="logo" aria-hidden="true"></span> Clube de Assinatura</div>
+      <nav aria-label="principal">
+        <ul>
+          <li><a href="#beneficios">Benefícios</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#cta">Assinar</a></li>
+        </ul>
+      </nav>
+      <a class="btn btn-ghost" href="#cta">Entrar</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ================= Hero ================= -->
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <span class="eyebrow">Novo • Leituras selecionadas semanalmente</span>
+          <h1>Desperte sua imaginação e <span style="background:linear-gradient(135deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent">explore novos mundos</span></h1>
+          <p>Receba todo mês um livro surpresa, acompanhados de materiais extras, clube de discussões e vantagens na nossa livraria parceira.</p>
+          <div class="cta">
+            <a class="btn btn-primary" href="#planos">Começar agora</a>
+            <a class="btn btn-ghost" href="#beneficios">Ver benefícios</a>
+          </div>
+        </div>
+        <div class="card mock" aria-hidden="true">
+          <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=1600&auto=format&fit=crop" alt="Livros em destaque" style="width:100%; height:100%; object-fit:cover; opacity:.86"/>
+          <img class="book" src="https://images.unsplash.com/photo-1526312426976-593c232e8b89?q=80&w=1200&auto=format&fit=crop" alt="Livro flutuando"/>
+          <svg class="spark" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M32 6l3.8 9.9L46 20l-10.2 4.1L32 34l-3.8-9.9L18 20l10.2-4.1L32 6z" fill="url(#g)"/><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7c5cff"/><stop offset="1" stop-color="#5de1e6"/></linearGradient></defs></svg>
+          <div class="shine"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Benefits ================= -->
+    <section id="beneficios" class="benefits">
+      <h2>Por que assinar?</h2>
+      <div class="grid-3">
+        <article class="card tile">
+          <div class="icon">📚</div>
+          <h3>Curadoria exclusiva</h3>
+          <p style="color:var(--muted)">Títulos selecionados por especialistas e alinhados ao seu perfil de leitura.</p>
+        </article>
+        <article class="card tile">
+          <div class="icon">🎧</div>
+          <h3>Conteúdos extras</h3>
+          <p style="color:var(--muted)">Guias, podcasts e entrevistas com autores para mergulhar ainda mais na história.</p>
+        </article>
+        <article class="card tile">
+          <div class="icon">💬</div>
+          <h3>Clube de discussão</h3>
+          <p style="color:var(--muted)">Participe de encontros mensais e converse com leitores como você.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= Plans / CTA ================= -->
+    <section id="planos" class="plans">
+      <h2>Escolha seu plano</h2>
+      <div class="plan-grid">
+        <div class="card plan">
+          <div class="badge" aria-label="Plano Essencial">Essencial</div>
+          <div class="price">R$ 39<span style="font-size:.6em; color:var(--muted)">/mês</span></div>
+          <ul class="list">
+            <li>1 livro/mês</li>
+            <li>Newsletter exclusiva</li>
+            <li>Acesso ao clube</li>
+          </ul>
+          <div class="cta"><a class="btn btn-ghost" href="#cta">Assinar Essencial</a></div>
+        </div>
+        <div class="card plan popular">
+          <div class="badge" aria-label="Plano Completo">Popular</div>
+          <div class="price">R$ 69<span style="font-size:.6em; color:var(--muted)">/mês</span></div>
+          <ul class="list">
+            <li>2 livros/mês</li>
+            <li>Conteúdos extras e podcasts</li>
+            <li>Descontos na livraria parceira</li>
+          </ul>
+          <div class="cta"><a class="btn btn-primary" href="#cta">Assinar Popular</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Final CTA ================= -->
+    <section id="cta" class="card" style="padding:22px; display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:center; margin-bottom:28px">
+      <div>
+        <h3 style="margin:0 0 6px">Pronto para abrir o próximo capítulo?</h3>
+        <p style="color:var(--muted); margin:0">Assine agora e receba um brinde de boas-vindas exclusivo.</p>
+      </div>
+      <form action="#" method="post" style="display:grid; grid-template-columns:1fr auto; gap:12px">
+        <input type="email" required placeholder="Seu e-mail" style="padding:12px 14px; border:1px solid #2a2f57; border-radius:12px; background:#11142b; color:var(--text); outline:none" />
+        <button class="btn btn-primary" type="submit">Quero assinar</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site">
+    <div class="container foot">
+      <div>© 2025 Clube de Assinatura • Feito em HTML + CSS (transitions + animations)</div>
+      <div style="text-align:right">Dica: abra o DevTools e teste os breakpoints</div>
+    </div>
+  </footer>
+</body>
+</html>
