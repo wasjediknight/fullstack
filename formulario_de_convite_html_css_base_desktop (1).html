@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Formulário de Convite</title>
+  <style>
+    :root{
+      --bg:#0f1220;         /* fundo da página */
+      --card:#151935;       /* cartões/painéis */
+      --muted:#97a0c3;      /* textos auxiliares */
+      --text:#e7ebff;       /* texto principal */
+      --brand:#7c5cff;      /* destaque/ações */
+      --brand-2:#5de1e6;    /* gradiente secundário */
+      --danger:#ff5c7a;     /* erros */
+      --success:#1ad1a5;    /* ok */
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text); background: radial-gradient(1200px 600px at 10% -10%, rgba(124,92,255,.15), transparent 60%),
+                         radial-gradient(900px 500px at 110% 10%, rgba(93,225,230,.18), transparent 60%),
+                         var(--bg);
+    }
+
+    .wrapper{max-width:1100px; margin:48px auto; padding:0 24px}
+    .grid{
+      display:grid; grid-template-columns: 1.1fr .9fr; gap:28px;
+    }
+
+    .panel{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);}
+
+    header.hero{padding:28px; margin-bottom:26px; background: linear-gradient(135deg, rgba(124,92,255,.35), rgba(93,225,230,.25)); border-radius:var(--radius);}
+    header.hero h1{margin:0 0 6px; font-size:28px}
+    header.hero p{margin:0; color:var(--muted)}
+
+    form{padding:24px}
+    fieldset{border:0; margin:0 0 18px; padding:0}
+    legend{font-weight:600; margin-bottom:8px}
+
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+
+    label{display:block; font-size:14px; color:var(--muted); margin:0 0 6px}
+
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="time"], textarea, select{
+      width:100%; padding:12px 14px; border:1px solid #2a2f57; border-radius:12px; background:#11142b; color:var(--text);
+      outline:none; transition:border .2s, box-shadow .2s;
+    }
+    textarea{min-height:96px; resize:vertical}
+
+    input:focus, textarea:focus, select:focus{border-color:var(--brand); box-shadow:0 0 0 3px rgba(124,92,255,.25)}
+    input:invalid{border-color:rgba(255,92,122,.6)}
+    .hint{font-size:12px; color:var(--muted); margin-top:6px}
+
+    /* Radios bonitos */
+    .radios{display:flex; gap:12px; flex-wrap:wrap}
+    .radio{
+      position:relative; display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid #2a2f57; background:#11142b;
+      border-radius:999px; cursor:pointer; user-select:none; transition:transform .06s ease;
+    }
+    .radio:active{transform:scale(.98)}
+    .radio input{appearance:none; width:18px; height:18px; margin:0; border:2px solid #6470a8; border-radius:50%; display:grid; place-content:center;}
+    .radio input::after{content:""; width:10px; height:10px; border-radius:50%; transform:scale(0); transition:.15s; background:var(--brand)}
+    .radio input:checked{border-color:var(--brand)}
+    .radio input:checked::after{transform:scale(1)}
+
+    .actions{display:flex; gap:12px; margin-top:6px}
+    button{
+      appearance:none; border:0; padding:12px 16px; border-radius:12px; font-weight:600; cursor:pointer; transition: filter .15s, transform .06s;
+    }
+    .btn-primary{background: linear-gradient(135deg, var(--brand), var(--brand-2)); color:#0b0b14}
+    .btn-ghost{background:transparent; color:var(--text); border:1px solid #2a2f57}
+    button:active{transform:translateY(1px)}
+
+    /* Cartão de instruções (direita) */
+    .preview{padding:22px}
+    .preview h2{margin:6px 0 12px}
+    .tip{display:flex; gap:12px; align-items:flex-start; padding:14px; border:1px dashed #2a2f57; border-radius:12px; background:#0f1330}
+    .tip b{color:var(--brand)}
+
+    footer.credits{margin-top:18px; text-align:center; color:var(--muted); font-size:12px}
+
+    /* Responsivo (apenas ajuste suave — foco é desktop) */
+    @media (max-width: 980px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="hero panel">
+      <h1>Formulário de Convite</h1>
+      <p>Preencha os dados do evento e do convidado. Layout focado em <b>desktop</b>, com acessibilidade e validação nativa do HTML.</p>
+    </header>
+
+    <div class="grid">
+      <section class="panel">
+        <form action="#" method="post" novalidate>
+
+          <fieldset>
+            <legend>Informações do Evento</legend>
+            <div class="row">
+              <div>
+                <label for="evento">Nome do evento *</label>
+                <input id="evento" name="evento" type="text" required placeholder="Ex.: Festa de Aniversário" />
+              </div>
+              <div>
+                <label for="anfitriao">Anfitrião/Organizador *</label>
+                <input id="anfitriao" name="anfitriao" type="text" required placeholder="Ex.: Washington Almeida" />
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="data">Data *</label>
+                <input id="data" name="data" type="date" required />
+              </div>
+              <div>
+                <label for="hora">Horário</label>
+                <input id="hora" name="hora" type="time" />
+              </div>
+            </div>
+            <div>
+              <label for="local">Local *</label>
+              <input id="local" name="local" type="text" required placeholder="Ex.: Salão Blue Garden, Rua X, 123" />
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Personalização</legend>
+            <div>
+              <label>Tema do convite</label>
+              <div class="radios" role="radiogroup" aria-label="Tema do convite">
+                <label class="radio"><input type="radio" name="tema" value="classico" checked /> Clássico</label>
+                <label class="radio"><input type="radio" name="tema" value="moderno" /> Moderno</label>
+                <label class="radio"><input type="radio" name="tema" value="minimalista" /> Minimalista</label>
+                <label class="radio"><input type="radio" name="tema" value="festivo" /> Festivo</label>
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="confirmacao">Confirmação (RSVP)</label>
+                <div class="radios" role="radiogroup" aria-label="Confirmação">
+                  <label class="radio"><input type="radio" name="rsvp" value="obrigatoria" checked /> Obrigatória</label>
+                  <label class="radio"><input type="radio" name="rsvp" value="opcional" /> Opcional</label>
+                  <label class="radio"><input type="radio" name="rsvp" value="nao_solicitar" /> Não solicitar</label>
+                </div>
+                <p class="hint">Se obrigatório, lembre-se de orientar o convidado a responder até uma data.</p>
+              </div>
+              <div>
+                <label for="dresscode">Dress code (opcional)</label>
+                <input id="dresscode" name="dresscode" type="text" placeholder="Ex.: Esporte fino" />
+              </div>
+            </div>
+            <div>
+              <label for="mensagem">Mensagem ao convidado</label>
+              <textarea id="mensagem" name="mensagem" placeholder="Escreva uma mensagem curta e simpática..."></textarea>
+              <p class="hint">Ex.: "Será uma alegria ter você com a gente!"</p>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Convidado</legend>
+            <div class="row">
+              <div>
+                <label for="convidado">Nome do convidado *</label>
+                <input id="convidado" name="convidado" type="text" required placeholder="Ex.: Maria Souza" />
+              </div>
+              <div>
+                <label for="email">E-mail</label>
+                <input id="email" name="email" type="email" placeholder="nome@exemplo.com" />
+              </div>
+            </div>
+            <div class="row">
+              <div>
+                <label for="telefone">Telefone</label>
+                <input id="telefone" name="telefone" type="tel" placeholder="(xx) xxxxx-xxxx" />
+              </div>
+              <div>
+                <label for="acompanha">Acompanhantes (opcional)</label>
+                <select id="acompanha" name="acompanha">
+                  <option value="0" selected>0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4+</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="actions">
+            <button class="btn-primary" type="submit">Gerar convite</button>
+            <button class="btn-ghost" type="reset">Limpar</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="panel preview" aria-live="polite">
+        <h2>Dicas de entrega</h2>
+        <div class="tip">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm1 15h-2v-2h2v2Zm0-4h-2V7h2v6Z" fill="currentColor" opacity=".8"/></svg>
+          <div>
+            <p><b>GitHub:</b> crie um repositório público, suba este arquivo e inclua um <code>README.md</code> com instruções rápidas.</p>
+            <p><b>LinkedIn:</b> poste um vídeo/gif curto mostrando o formulário e comente os aprendizados.</p>
+            <p><b>Extras (opcional):</b> versão dark/light via <code>prefers-color-scheme</code>, máscara de telefone, e uma prévia do convite com JavaScript.</p>
+          </div>
+        </div>
+        <footer class="credits">Base de estudo – Rocketseat (formulários). Layout criado por você ✨</footer>
+      </aside>
+    </div>
+  </div>
+</body>
+</html>
