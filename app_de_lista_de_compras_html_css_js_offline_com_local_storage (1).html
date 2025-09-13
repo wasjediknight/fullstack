@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sorteador de Números</title>
+  <style>
+    :root{
+      --bg:#f9fafb; --paper:#ffffff; --ink:#111827; --muted:#6b7280; --ring:0 0 0 3px rgba(59,130,246,.35);
+      --primary:#2563eb; --primary-dark:#1e40af; --danger:#dc2626; --border:#e5e7eb;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px}
+    .card{background:var(--paper);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.06);max-width:420px;width:100%;padding:24px;display:flex;flex-direction:column;gap:20px}
+    h1{font-size:20px;margin:0;text-align:center}
+    label{font-size:14px;color:var(--muted)}
+    input{padding:12px 14px;border:1px solid var(--border);border-radius:12px;width:100%;outline:none;margin-top:4px}
+    input:focus{border-color:var(--primary);box-shadow:var(--ring)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    button{padding:14px;border:none;border-radius:12px;font-weight:600;cursor:pointer}
+    .btn-primary{background:var(--primary);color:white}
+    .btn-primary:hover{background:var(--primary-dark)}
+    .btn-danger{background:var(--danger);color:white}
+    .result{font-size:32px;font-weight:800;text-align:center;color:var(--primary)}
+    .history{margin-top:8px;padding:12px;border:1px dashed var(--border);border-radius:12px;max-height:120px;overflow-y:auto;font-size:14px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎲 Sorteador de Números</h1>
+    <div class="grid">
+      <div>
+        <label>Valor mínimo</label>
+        <input id="min" type="number" value="1">
+      </div>
+      <div>
+        <label>Valor máximo</label>
+        <input id="max" type="number" value="100">
+      </div>
+    </div>
+    <button class="btn-primary" id="drawBtn">Sortear</button>
+    <div class="result" id="result">--</div>
+    <div class="history" id="history">Histórico vazio…</div>
+    <button class="btn-danger" id="clearBtn">Limpar Histórico</button>
+  </div>
+
+  <script>
+    const minEl = document.getElementById('min');
+    const maxEl = document.getElementById('max');
+    const resultEl = document.getElementById('result');
+    const historyEl = document.getElementById('history');
+    const drawBtn = document.getElementById('drawBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    let history = [];
+
+    function draw(){
+      const min = parseInt(minEl.value) || 0;
+      const max = parseInt(maxEl.value) || 0;
+      if(min > max){
+        alert('O valor mínimo deve ser menor que o máximo.');
+        return;
+      }
+      const n = Math.floor(Math.random() * (max - min + 1)) + min;
+      resultEl.textContent = n;
+      history.unshift(n);
+      renderHistory();
+    }
+
+    function renderHistory(){
+      if(history.length === 0){
+        historyEl.textContent = 'Histórico vazio…';
+        return;
+      }
+      historyEl.textContent = history.join(', ');
+    }
+
+    function clearHistory(){
+      history = [];
+      renderHistory();
+      resultEl.textContent = '--';
+    }
+
+    drawBtn.addEventListener('click', draw);
+    clearBtn.addEventListener('click', clearHistory);
+  </script>
+</body>
+</html>
