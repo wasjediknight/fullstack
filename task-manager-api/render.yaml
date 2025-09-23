@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: task-manager-api
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: "npm ci && npx prisma generate && npm run build"
+    startCommand: "npx prisma migrate deploy && node dist/server.js"
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 1d
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
