@@ -1,0 +1,80 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+
+enum Role { ADMIN TECH CLIENT }
+enum TicketStatus { OPEN IN_PROGRESS CLOSED }
+
+model User {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  passwordHash  String
+  role          Role
+  avatarUrl     String?
+  technician    TechnicianProfile?
+  client        ClientProfile?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model TechnicianProfile {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id])
+  availability  String[]
+  bio           String?
+  Tickets       Ticket[] @relation("TechTickets")
+}
+
+model ClientProfile {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  Tickets   Ticket[] @relation("ClientTickets")
+}
+
+model Service {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  price     Decimal  @db.Decimal(10,2)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  TicketItems TicketService[]
+}
+
+model Ticket {
+  id           String        @id @default(cuid())
+  clientId     String
+  client       ClientProfile @relation("ClientTickets", fields: [clientId], references: [id], onDelete: Cascade)
+  technicianId String
+  technician   TechnicianProfile @relation("TechTickets", fields: [technicianId], references: [id])
+  status       TicketStatus  @default(OPEN)
+  scheduledAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  items        TicketService[]
+  statusHistory TicketStatusHistory[]
+  totalCached  Decimal  @db.Decimal(12,2) @default(0.00)
+}
+
+model TicketService {
+  id        String   @id @default(cuid())
+  ticketId  String
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id])
+  unitPrice Decimal  @db.Decimal(10,2)
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+}
+
+model TicketStatusHistory {
+  id        String        @id @default(cuid())
+  ticketId  String
+  ticket    Ticket        @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  from      TicketStatus?
+  to        TicketStatus
+  changedBy String
+  changedAt DateTime      @default(now())
+}
